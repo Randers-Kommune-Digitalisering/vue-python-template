@@ -46,29 +46,29 @@ jobs:
 
 # Build
       - name: Build
-        run: ./build/build.sh ${{ env.DOCKER_SERVICE }} ${{ github.event.repository.url }}
+        run: ./scripts/build.sh ${{ env.DOCKER_SERVICE }} ${{ github.event.repository.url }}
 
 # Push to Github
       - name: Tag service git id docker image
-        run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:${{ github.sha }}
+        run: ./scripts/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:${{ github.sha }}
 
       - name: Tag service dev docker image
-        run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:dev
+        run: ./scripts/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:dev
 
       - name: Push dev docker image.
-        run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:dev
+        run: ./scripts/docker-push.sh ${{ env.DOCKER_SERVICE }}:dev
 
       - name: Push service git id docker image.
-        run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:${{ github.sha }}
+        run: ./scripts/docker-push.sh ${{ env.DOCKER_SERVICE }}:${{ github.sha }}
 
       - name: Push latest service docker image
         if: ${{ steps.tag.conclusion != 'skipped' }}
-        run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:latest
+        run: ./scripts/docker-push.sh ${{ env.DOCKER_SERVICE }}:latest
 
       - name: Tag version service docker image
         if: ${{ steps.tag.conclusion != 'skipped' }}
-        run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:${{ steps.tag.outputs.VERSION }}
+        run: ./scripts/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:${{ steps.tag.outputs.VERSION }}
 
       - name: Push version service docker image.
         if: ${{ steps.tag.conclusion != 'skipped' }}
-        run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:${{ steps.tag.outputs.VERSION }}
+        run: ./scripts/docker-push.sh ${{ env.DOCKER_SERVICE }}:${{ steps.tag.outputs.VERSION }}
