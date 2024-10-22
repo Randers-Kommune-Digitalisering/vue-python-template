@@ -1,11 +1,9 @@
 from flask import Flask
 from healthcheck import HealthCheck
 from prometheus_client import generate_latest
-
 from utils.logging import set_logging_configuration, is_ready_gauge, last_updated_gauge
 from utils.config import DEBUG, PORT, POD_NAME
 from api_endpoints import api_endpoints  # Uncomment to import enpoints
-
 
 set_logging_configuration()
 
@@ -31,3 +29,4 @@ app = create_app()
 
 if __name__ == '__main__':  # pragma: no cover
     app.run(debug=DEBUG, host='0.0.0.0', port=PORT)
+
