@@ -1,0 +1,21 @@
+services:
+  python_vue:
+    build: .
+
+    networks:
+    - python_vue
+
+    # volumes:
+    # - ./vue:/app/vue
+    # - ./python:/app/python
+
+    # command: sh -c "cd vue && npm run serve && python python/src/main.py"
+    
+    ports:
+    - "8080:8080"
+    - "8765:8765"
+    - "3000:3000"
+
+networks: 
+  python_vue:
+    name: python_vue

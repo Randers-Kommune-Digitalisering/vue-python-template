@@ -8,10 +8,10 @@ from utils.config import POD_NAME
 from utils.logging import is_ready_gauge, last_updated_gauge, job_start_counter, job_complete_counter, job_duration_summary
 
 logger = logging.getLogger(__name__)
-api_endpoints = Blueprint('api', __name__, url_prefix='/api')
+api_endpoints = Blueprint('api', __name__)
 
 # NB: uncomment code in main.py to enable these endpoints
-# Any endpoints added here will be available at /api/<endpoint> - e.g. http://127.0.0.1:8080/api/example
+# Any endpoints added here will be available at frontend /api/<endpoint> - e.g. http://127.0.0.1:3000/api/example
 # Change the the example below to suit your needs + add more as needed
 
 

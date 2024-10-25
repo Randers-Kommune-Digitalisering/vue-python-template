@@ -1,30 +1,41 @@
-FROM node:14-alpine AS frontend
-
+# Stage 1: Build Vue app and install Express dependencies
+FROM node:lts-alpine AS node-build
 WORKDIR /app
 
-COPY vue/package*.json ./vue/
-RUN cd vue && npm install
+# Copy project files and folders to the current working directory
+COPY . .
 
-COPY vue/ ./vue/
-RUN cd vue && npm run build
+# Install and build Vue app
+RUN cd vue && npm install && npm run build
 
+# Copy built Vue app to a separate directory
 RUN cp -r vue/dist dist
 
-RUN rm -rf vue
+# Install Express dependencies
+RUN cd express && npm install && npm ci --only=production
 
-FROM python:3.10-alpine AS backend
-
+# Stage 2: Build the final image with Python and Node.js
+FROM python:3.10-alpine
 WORKDIR /app
 
-RUN apk update
-RUN apk add musl-dev gcc libpq-dev mariadb-connector-c-dev postgresql-dev python3-dev
+# Install necessary packages
+RUN apk update && \
+    apk add --no-cache musl-dev gcc libpq-dev mariadb-connector-c-dev postgresql-dev python3-dev nodejs npm
 
+# Install backend dependencies
 COPY python/src/requirements.txt ./python/src/
 RUN pip install -r python/src/requirements.txt
 
+# Copy backend source files
 COPY python/ ./python/
 
-COPY --from=frontend /app/dist /app/frontend
+# Copy built Vue app and Express server files from the node-build stage
+COPY --from=node-build /app/dist ./dist
+COPY --from=node-build /app/express ./express
 
-EXPOSE 8000
-CMD ["python", "python/src/main.py"]
+# Expose ports
+EXPOSE 3000
+EXPOSE 8765
+
+# Start both the Python backend and the Express server
+CMD ["sh", "-c", "python python/src/main.py & node express/server.js"]
