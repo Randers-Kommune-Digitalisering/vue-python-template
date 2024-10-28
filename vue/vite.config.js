@@ -1,6 +1,9 @@
 import { fileURLToPath, URL } from 'node:url'
 const path = require('path')
 
+const VUE_PORT = process.env.VUE_PORT || 3000
+const BACKEND_PORT = process.env.BACKEND_PORT || 8080
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -10,6 +13,13 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
+    port: VUE_PORT,
+    proxy: {
+      '/api/': {
+        target: 'http://localhost:' + BACKEND_PORT + '/',
+        changeOrigin: true
+      }
+    }
   },
   plugins: [
     vue(),
