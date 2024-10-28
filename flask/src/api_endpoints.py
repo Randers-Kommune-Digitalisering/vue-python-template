@@ -1,8 +1,6 @@
 import logging
-import time
 
-from datetime import timedelta
-from flask import Blueprint, Response, jsonify
+from flask import Blueprint, jsonify
 
 logger = logging.getLogger(__name__)
 api_endpoints = Blueprint('api', __name__, url_prefix='/api')

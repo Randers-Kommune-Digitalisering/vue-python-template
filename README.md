@@ -1,5 +1,6 @@
 # Vue-Python-Tempplate
-Template for vue and python projects
+Template for vue and python projects.
+NB: backend endpoints er åbne udtil (samme som frontend'en). Hvis der skal bruges en "rigtig" backend - deploy [vue](https://github.com/Randers-Kommune-Digitalisering/vue-js-template) og [flask](https://github.com/Randers-Kommune-Digitalisering/python-app-template) i hver sin pod.
 
 ## Kørsel af Frontenden(Vue)
 * CD hen til vue folder: ``` cd vue ```
@@ -7,8 +8,7 @@ Template for vue and python projects
 * Compile, hot reload og start frontenden: ``` npm run serve ```
 
 ## Kørsel af Bakcenden(Python)
-* CD hen til python folder: ``` cd python\src ```
-* Start applikationen: ``` python main.py ```
+* Start applikationen: ``` python flask/src/main.py ```
 
 
 ## Udviklings commands:
