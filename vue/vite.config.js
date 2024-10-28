@@ -15,6 +15,9 @@ export default defineConfig({
   server: {
     port: VUE_PORT,
     proxy: {
+      watch: {
+        usePolling: true,
+      },
       '/api/': {
         target: 'http://localhost:' + BACKEND_PORT + '/',
         changeOrigin: true
