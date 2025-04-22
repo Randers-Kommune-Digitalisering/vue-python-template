@@ -1,7 +1,6 @@
 import logging
 import requests
 
-from datetime import timedelta
 from flask import Blueprint, redirect, url_for, request, session
 from authlib.integrations.flask_client import OAuth
 from flask_session import Session
@@ -27,7 +26,7 @@ def add_user_handling(app):
         authorize_url=f'{AUTH_URL}/{AUTH_PATH.strip("/")}/realms/{AUTH_REALM}/protocol/openid-connect/auth',
         jwks_uri=f'{AUTH_URL}/{AUTH_PATH.strip("/")}/realms/{AUTH_REALM}/protocol/openid-connect/certs',
         logout_url=f'{AUTH_URL}/{AUTH_PATH.strip("/")}/realms/{AUTH_REALM}/protocol/openid-connect/logout'
-        )
+    )
 
     @app.before_request
     def check_authenticated():

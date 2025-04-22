@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from flask_cors import CORS
 from healthcheck import HealthCheck
@@ -8,7 +7,6 @@ from utils.logging import set_logging_configuration
 from utils.config import DEBUG, PORT
 from api_endpoints import api_endpoints
 from user_handling import add_user_handling
-from flask_session import Session
 
 
 set_logging_configuration()
@@ -16,8 +14,6 @@ set_logging_configuration()
 
 def create_app():
     app = Flask(__name__, static_folder='dist')
-    app.config['SESSION_TYPE'] = 'filesystem'
-    Session(app)
     CORS(app)
 
     # Add user handling
