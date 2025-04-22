@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def add_user_handling(app):
+    app.config['SESSION_TYPE'] = 'filesystem'
     Session(app)
 
     app.secret_key = COOKIE_SECRET
