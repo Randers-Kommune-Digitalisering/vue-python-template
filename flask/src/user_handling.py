@@ -1,9 +1,10 @@
 import logging
 import requests
+
+from datetime import timedelta
 from flask import Blueprint, redirect, url_for, request, session
 from authlib.integrations.flask_client import OAuth
 from flask_session import Session
-from cachelib.file import FileSystemCache
 
 from utils.config import COOKIE_SECRET, CLIENT_ID, CLIENT_SECRET, AUTH_URL, AUTH_PATH, AUTH_REALM
 
@@ -11,9 +12,6 @@ logger = logging.getLogger(__name__)
 
 
 def add_user_handling(app):
-    app.config['SESSION_TYPE'] = 'cachelib'
-    app.config['SESSION_SERIALIZATION_FORMAT'] = 'json'
-    app.config['SESSION_CACHELIB'] = FileSystemCache(threshold=500, cache_dir="./sessions")
     Session(app)
 
     app.secret_key = COOKIE_SECRET
